@@ -1,0 +1,3 @@
+*.pyc
+Calendar/.env
+Calendar/Calendar/settings.py
