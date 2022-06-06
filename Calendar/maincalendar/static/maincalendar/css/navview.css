@@ -1,0 +1,38 @@
+.row{
+    display:flex;
+}
+
+.center{
+    align-items: center;
+}
+
+.between{
+    justify-content: space-between;
+}
+
+.button:hover, .arrow:hover{
+    filter:brightness(0.8);
+    cursor: pointer
+}
+.button:active, .arrow:active{
+    filter:brightness(0.9);
+    cursor: pointer
+}
+
+.maingroup{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%
+}
+
+@media screen and (max-width:1000px)  {
+    .maingroup{
+        display:grid;
+        justify-items: center;
+        justify-content: center;
+    }
+    
+    
+}

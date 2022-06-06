@@ -1,23 +1,42 @@
 
-{% block style %}
-    <link rel="stylesheet" href="{% static 'maincalendar/css/navview.css'%}">   
-{% endblock %}
+{% load static %}
 
-<div class="group1">
-    <div>
-        <input type="button" value="<">
-        <input type="button" value=">">
+<style>
+    .button, .arrow{
+        background-color: {{style.color1}};
+        color: {{style.color4}};
+        border: none;
+        border-radius: 0.25rem
+    }
+    .button{
+        width:calc({{style.btnWidth}}*2);
+        height:{{style.btnHeight}};
+        margin: 0 0.1rem
+    }
+    .arrow{
+        width:{{style.btnWidth}};
+        height:{{style.btnHeight}};
+        margin: 0 0.1rem
+    }
+</style>
+
+<div class="maingroup">
+    <div class="group1 row">
+        <div class="row">
+            <input class="arrow" type="button" value="<">
+            <input class="arrow" type="button" value=">">
+        </div>
+        <div>
+            <input class="button" type="button" value="{{texts.txtToday}}">
+        </div>
     </div>
-    <div>
-        <input type="button" value="{{texts.txtToday}}">
+
+    <h1>{{defaultday.listview}}</h1>
+
+    <div class="group2">
+        <input class="button" type="button" value="{{texts.txtList}}">
+        <input class="button" type="button" value="{{texts.txtDay}}">
+        <input class="button" type="button" value="{{texts.txtWeek}}">
+        <input class="button" type="button" value="{{texts.txtMonth}}">
     </div>
-</div>
-
-<h1>{{selectedDay}}</h1>
-
-<div class="group2">
-    <input type="button" value="{{texts.txtList}}">
-    <input type="button" value="{{texts.txtDay}}">
-    <input type="button" value="{{texts.txtWeek}}">
-    <input type="button" value="{{texts.txtMonth}}">
 </div>

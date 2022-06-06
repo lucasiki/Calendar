@@ -8,6 +8,8 @@ from datetime import date
 from .models import *
 from django.contrib.sessions.models import Session
 
+
+
 # language = default, and try to get stored session language
 def initializeTextDB(df,language, session):
     try: 
