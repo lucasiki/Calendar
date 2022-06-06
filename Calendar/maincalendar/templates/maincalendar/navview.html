@@ -1,0 +1,23 @@
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'maincalendar/css/navview.css'%}">   
+{% endblock %}
+
+<div class="group1">
+    <div>
+        <input type="button" value="<">
+        <input type="button" value=">">
+    </div>
+    <div>
+        <input type="button" value="{{texts.txtToday}}">
+    </div>
+</div>
+
+<h1>{{selectedDay}}</h1>
+
+<div class="group2">
+    <input type="button" value="{{texts.txtList}}">
+    <input type="button" value="{{texts.txtDay}}">
+    <input type="button" value="{{texts.txtWeek}}">
+    <input type="button" value="{{texts.txtMonth}}">
+</div>

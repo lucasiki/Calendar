@@ -1,0 +1,46 @@
+{% load static%}
+
+
+    <style>
+        tr:nth-child(even) {
+            background-color: #D6EEEE;
+          }
+    
+          table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding:0.5rem;
+            text-align: center;
+            
+          }
+          a {
+            all:unset;
+            cursor: pointer;
+            color: blue
+        }
+        a:hover{
+            filter:brightness(0.5)
+        }
+        .flexrow{
+            display:flex
+        }
+    </style>
+
+    <table>
+        <h1>Calendário</h1>  
+        <h2><<< Segunda-Feira 06/06/2022  >>></h2>  
+        <h3>Dia</h3><h3>Semana</h3><h3>Mês</h3>
+        <tr>
+            <th>Hora</th>
+            <th class="evento">Eventos</th>
+        </tr>
+
+        {% for hora in daydata.hours %}
+        <tr>
+            <td>{{hora}}</td>
+            <td>Evento</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+    
