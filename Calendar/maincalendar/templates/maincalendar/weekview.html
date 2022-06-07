@@ -41,10 +41,6 @@
             width:-webkit-fill-available;
             min-width: 13rem;
         }
-        .hourbox div:nth-child(even),
-        .eventbox div:nth-child(even){
-            background-color: #D6EEEE;
-        }
         .event,
         .hour{
             border: 1px solid #c8c8c8;
@@ -53,8 +49,10 @@
             display:flex;
             align-items: center;
             justify-content: center;
+            background-color:#f1f1f1
         }
         .sticky{
+            z-index: 1;
             position: sticky;
             top: 0;
             background-color:white;
@@ -62,6 +60,9 @@
         }
         .yellowish{
             background-color:#fcfcc8
+        }
+        .even{
+            filter:brightness(0.9)
         }
 
     </style>
@@ -75,7 +76,7 @@
                 <div id = "marker{{hora}}" class="hour ">
                     {{hora}}
                 </div>
-                <div id = "markerhalf{{hora}}" class="hour"></div>
+                <div id = "markerhalf{{hora}}" class="hour even"></div>
 
             {% endfor %}
         </div>
@@ -83,15 +84,15 @@
         {% for object in defaultday.objects %}
         <div class="eventbox">
             <div class="event sticky {% if defaultday.today == object.date  %}yellowish{% endif %}">{{object.weekday |truncatechars:4}}, {{object.day}}/{{object.month}}</div>
-            {% for hora in daydata.hours %}
+                {% for hora in daydata.hours %}
 
-                <div class="event {% if defaultday.today == object.date  %}yellowish{% endif %}"></div>
+                    <div class="event {% if defaultday.today == object.date  %}yellowish{% endif %}"></div>
+                        
                     
-                
-                <div class="event {% if defaultday.today == object.date  %}yellowish{% endif %}"></div>
+                    <div class="event even {% if defaultday.today == object.date  %}yellowish{% endif %}"></div>
 
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
         {% endfor %}
 
         

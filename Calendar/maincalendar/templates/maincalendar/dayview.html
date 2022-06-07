@@ -2,27 +2,7 @@
 
 
     <style>
-        tr:nth-child(even) {
-            background-color: #D6EEEE;
-          }
-
-          table{
-              width:100%;
-              max-height:100vh;
-              overflow:scroll
-          }
-          .hour{
-              width:5%
-          }
-    
-          table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding:0.5rem;
-            text-align: center;
-            
-          }
-          a {
+        a {
             all:unset;
             cursor: pointer;
             color: blue
@@ -33,59 +13,82 @@
         .flexrow{
             display:flex
         }
-        .tablebox{
+
+        .container{
+            overflow: scroll;
             width: 100%;
             height: 75vh;
-            overflow-y: scroll;
+            display: flex;
+            border: 1px solid black;
+            border-top:unset;
             -ms-overflow-style: none; /* for Internet Explorer, Edge */
             scrollbar-width: none; /* for Firefox */
         }
-        .tablebox::-webkit-scrollbar{
+        .container::-webkit-scrollbar{
             display: none;
         }
-        .container{
-            width:100%
-        }
-        .container thead{
-            position:sticky;
-            top:0;
-        }
-        .container thead {
-            box-shadow: inset 1px 1px #000, 0 1px #000;
-            background-color:white
-          }
 
-          .hour,
-          .event{
-              height:1.5rem
-          }
+
+        
+        .hourbox{
+            width:5%;
+            min-width: 5rem;
+        }
+        .eventbox{
+            width:-webkit-fill-available;
+            min-width: 13rem;
+        }
+        .event,
+        .hour{
+            border: 1px solid #c8c8c8;
+            width:100%;
+            height:1.5rem;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            background-color:#f1f1f1
+        }
+        .sticky{
+            z-index: 1;
+            position: sticky;
+            top: 0;
+            background-color:white;
+            box-shadow: inset 1px 1px #000, 0 1px #000;
+        }
+        .yellowish{
+            background-color:#fcfcc8
+        }
+        .even{
+            filter:brightness(0.9)
+        }
     </style>
 
     <input hidden id="newrendername"  type="text" value="{{rendername}}">
     <div class="container">
-        <div id="daytablebox" class="tablebox">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="hour">{{texts.txtHour}}</th>
-                        <th class="evento">{{defaultday.weekday}}</th>
-                    </tr>
-                </thead>
+        <div class="hourbox">
+            <div class="hour sticky {% if defaultday.today == defaultday.date  %}yellowish{% endif %}">{{texts.txtHour}}</div>
+            {% for hora in daydata.hours %}
 
-                {% for hora in daydata.hours %}
-                <tr>
-                    <td class="hour" id = "marker{{hora}}">{{hora}}</td>
-                    <td class="event"></td>
-                </tr>
-                <tr>
-                    <td class="event"></td>
-                    <td class="event"></td>
-                </tr>
-                {% endfor %}
+                <div id = "marker{{hora}}" class="hour {% if defaultday.today == defaultday.date  %}yellowish{% endif %}">
+                    {{hora}}
+                </div>
+                <div id = "markerhalf{{hora}}" class="hour even {% if defaultday.today == defaultday.date  %}yellowish{% endif %}"></div>
 
-            </table>
+            {% endfor %}
         </div>
-    </div>
 
+        <div class="eventbox">
+            <div class="event sticky {% if defaultday.today == defaultday.date  %}yellowish{% endif %}">{{defaultday.weekday}}, {{defaultday.day}}/{{defaultday.month}}</div>
+            {% for hora in daydata.hours %}
+
+                <div class="event {% if defaultday.today == defaultday.date  %}yellowish{% endif %}"></div>
+                    
+                
+                <div class="event even {% if defaultday.today == defaultday.date  %}yellowish{% endif %}"></div>
+            {% endfor %}
+            </div>
+        
+
+    </div>
 
     
