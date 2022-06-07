@@ -1,3 +1,5 @@
+from django.http import JsonResponse
+from django.urls import reverse
 from django.shortcuts import render
 from django.views import View
 from pandas import read_excel
@@ -27,32 +29,107 @@ class indexView(View):
         objects = paginator.get_page(1)
 
         defaultday = treatday(datetime.today(), daydata, texts) 
-        
 
+        request.session['DaySession'] = str(datetime.today())
+
+        request.session['selectedView'] = urlreverse['list']
+        
         context = {
             "texts": texts,
             "session": request.session,
             "objects": objects,
             "daydata": daydata,
             "style" : style,
-            "defaultday" : defaultday
+            "defaultday" : defaultday,
+            "rendername": defaultday['listview']
         }
         return render(request, 'maincalendar/index.html', context)
 
 
-
-class dayView(View):
-    def get(self, request):
+class processView(View):
+    def post(self, request):
         texts = initializeTextDB(df,language,request.session)
         daydata = processDaydata(texts)
         style = processStyle(texts)
+        ret = processRequest(request)
+        daysession = parseDay(request.session['DaySession'])
+        selectedview = request.session['selectedView']
         objects = objetos
 
+        paginatorpage = 1
+        paginatorDefault = 10
+        if ret['key'] == 'paginate':
+            paginatorDefault = ret['amount']
+            paginatorpage = ret['data']
+
+        paginator = Paginator(objects,paginatorDefault)
+        objects = paginator.get_page(paginatorpage)
+
+
+        mod = 0
+        if ret['key'] == 'decrease':
+            mod = -1
+        elif ret['key'] == 'increase':
+            mod = 1
+        elif ret['key'] == 'today':    
+            daysession = datetime.today()
+        elif ret['key'] == 'list':
+            selectedview = urlreverse['list']
+        elif ret['key'] == 'day':
+            selectedview = urlreverse['day']
+        elif ret['key'] == 'week':
+            selectedview = urlreverse['week']
+        elif ret['key'] == 'month':
+            selectedview = urlreverse['month']
+
+        request.session['selectedView'] = selectedview
+
+        increase = 0
+        if selectedview == urlreverse['list']:
+            increase = mod
+            newdate = daysession + timedelta(increase)
+            request.session['DaySession'] = str(newdate)    
+            defaultday = treatday(newdate, daydata, texts)
+            rendername = defaultday['listview']
+
+        elif selectedview == urlreverse['day']:
+            increase = mod
+            newdate = daysession + timedelta(increase)
+            request.session['DaySession'] = str(newdate)
+            defaultday = treatday(newdate, daydata, texts)
+            rendername = defaultday['dayview']
+
+        elif selectedview == urlreverse['week']:
+            increase = mod*7
+            newdate = daysession + timedelta(increase)
+            request.session['DaySession'] = str(newdate)
+            defaultday = treatweek(newdate, daydata)
+            rendername = defaultday['weeklist']
+
+        elif selectedview == urlreverse['month']:
+            increase = mod*30
+            newdate = daysession + timedelta(increase)
+            request.session['DaySession'] = str(newdate)
+            defaultday = treatmonth(newdate, daydata)
+            rendername = defaultday['monthlist']
+
+
+        print(defaultday)
         context = {
             "texts": texts,
             "session": request.session,
             "objects": objects,
             "daydata": daydata,
-            "style" : style
+            "style" : style,
+            "defaultday" : defaultday,
+            "rendername": rendername,
+            "paginatorDefault": paginatorDefault
         }
-        return render(request, 'maincalendar/dayview.html', context)
+
+        return render(request, selectedview, context)
+
+        
+
+
+
+        return JsonResponse({})

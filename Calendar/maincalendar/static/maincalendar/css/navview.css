@@ -1,9 +1,19 @@
+
+
 .row{
     display:flex;
 }
 
 .center{
     align-items: center;
+}
+
+.jcenter {
+    justify-content: center;
+}
+
+.margin{
+    margin: 2rem 0rem
 }
 
 .between{

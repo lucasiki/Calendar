@@ -23,20 +23,75 @@
 <div class="maingroup">
     <div class="group1 row">
         <div class="row">
-            <input class="arrow" type="button" value="<">
-            <input class="arrow" type="button" value=">">
+            <input onclick="reducedate()" class="arrow" type="button" value="<">
+            <input onclick="increasedate()" class="arrow" type="button" value=">">
         </div>
         <div>
-            <input class="button" type="button" value="{{texts.txtToday}}">
+            <input onclick="turntoday()" class="button" type="button" value="{{texts.txtToday}}">
         </div>
     </div>
 
-    <h1>{{defaultday.listview}}</h1>
+    <h1 id="rendername">{{rendername}}</h1>
 
     <div class="group2">
-        <input class="button" type="button" value="{{texts.txtList}}">
-        <input class="button" type="button" value="{{texts.txtDay}}">
-        <input class="button" type="button" value="{{texts.txtWeek}}">
-        <input class="button" type="button" value="{{texts.txtMonth}}">
+        <input onclick="listview()" class="button" type="button" value="{{texts.txtList}}">
+        <input onclick="dayview()" class="button" type="button" value="{{texts.txtDay}}">
+        <input onclick="weekview()" class="button" type="button" value="{{texts.txtWeek}}">
+        <input onclick="monthview()" class="button" type="button" value="{{texts.txtMonth}}">
     </div>
 </div>
+
+<script>
+    url = '{% url "process-page" %}'
+
+    async function reducedate(){
+        obj = await fetchobject(url, {key:'decrease'}, root)
+        rendername.innerHTML = newrendername.value
+        try{charge('marker 07:00')}
+        catch(err){}
+        
+    }
+
+    async function increasedate(){
+        obj = await fetchobject(url, {key:'increase'}, root)
+        rendername.innerHTML = newrendername.value
+        try{charge('marker 07:00')}
+        catch(err){}
+    }
+
+    async function turntoday(){
+        obj = await fetchobject(url, {key:'today'}, root)
+        rendername.innerHTML = newrendername.value
+        try{charge('marker 07:00')}
+        catch(err){}
+    }
+
+    async function listview(){
+        obj = await fetchobject(url, {key:'list'}, root)
+        rendername.innerHTML = newrendername.value
+    }
+
+    async function dayview(){
+        obj = await fetchobject(url, {key:'day'}, root)
+        rendername.innerHTML = newrendername.value
+        charge('marker 07:00')
+    }
+
+    async function weekview(){
+        obj = await fetchobject(url, {key:'week'}, root)
+        rendername.innerHTML = newrendername.value
+        try{charge('marker 07:00')}
+        catch(err){}
+    }
+
+    async function monthview(){
+        obj = await fetchobject(url, {key:'month'}, root)
+        rendername.innerHTML = newrendername.value
+    }
+
+    function charge(element){
+        document.getElementById(element).scrollIntoView();
+    }
+    
+
+</script>

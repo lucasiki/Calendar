@@ -4,5 +4,6 @@ from .views import *
 
 urlpatterns = [
     path("", indexView.as_view(), name= "index-page"),
-    path("day/", dayView.as_view(), name= "day-page"),
+    path("process/", processView.as_view(), name="process-page"),
 ]
+

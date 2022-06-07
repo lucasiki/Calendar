@@ -1,0 +1,82 @@
+
+
+    <input id="newrendername" hidden type="text" value="{{rendername}}">
+
+
+
+    <style>
+        .container{
+            width:100%
+        }
+        .data{
+            display: grid;
+            grid-template-columns: auto auto auto auto auto auto auto;
+            justify-items: center;
+            overflow-x: scroll;
+            border: 1px solid #c8c8c8;
+            -ms-overflow-style: none; /* for Internet Explorer, Edge */
+            scrollbar-width: none; /* for Firefox */
+        }
+        .data::-webkit-scrollbar{
+            display: none;
+        }
+
+        .data .element{
+            width: 100%;
+            border: 1px solid #c8c8c8;
+            border-collapse: collapse;
+            min-width: 9rem;
+        }
+        .maxheight{
+            height: 10rem;
+        }
+        .minheight{
+            height:2rem;
+            position:sticky;
+            top:0;
+            background-color:white
+        }
+        .grouper{
+            width:100%
+        }
+        .daydisplay{
+            display:flex;
+            justify-content: flex-end;
+            padding: 0.2rem
+        }
+        .grayish{
+            color:#c8c8c8
+        }
+        .yellowish{
+            background-color:#fcfcc8
+        }
+        
+        
+        
+        
+
+    </style>
+
+    <div class="container">
+
+        <div class="data">
+                
+            {% for object in defaultday.objects%}
+                <div class="grouper">
+                    {% if object.id >= 0 and object.id < 7 %}
+                        <div class="element minheight row jcenter center">{{object.weekday}}</div>
+                    {% endif %}
+                    <div class="element maxheight 
+                    {% if defaultday.today.day == object.day and defaultday.today.month == object.month and defaultday.today.year == object.year  %}yellowish{% endif %}">
+                         
+
+                        <div class="daydisplay {% if defaultday.maindate.month != object.month%}grayish{% endif %}
+                       
+                        ">{{object.day}}</div>
+                    </div>
+                </div>
+            {% endfor %}
+                
+        </div>
+
+    </div>

@@ -6,21 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'maincalendar/css/navview.css'%}">
+    <script src ={% static 'maincalendar/js/functions.js' %}></script>
     <title>Calendar</title>
     {% block style %}
     {% endblock %}
 </head>
 <body>
-
+    {% csrf_token %}
     <section id="navbar">
         {% include "maincalendar/navview.html" %}
     </section>
 
-    <section id="root">
-
+    <section id="root" class="row jcenter margin">
+        {% include session.selectedView %}
     </section>
 
    
-    
+       
 </body>
 </html>

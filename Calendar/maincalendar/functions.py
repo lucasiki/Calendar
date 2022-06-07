@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.template import loader
 from django.conf import settings
 import hashlib
-from datetime import date
+from datetime import date, datetime
 from .models import *
 from django.contrib.sessions.models import Session
 
@@ -89,3 +89,7 @@ def strfdelta(tdelta, fmt):
     d["hours"], rem = divmod(tdelta.seconds, 3600)
     d["minutes"], d["seconds"] = divmod(rem, 60)
     return fmt.format(**d)
+
+def parseDay(string):
+    dateobject = datetime.strptime(string, "%Y-%m-%d %H:%M:%S.%f")
+    return dateobject

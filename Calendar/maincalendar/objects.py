@@ -1,5 +1,12 @@
 from datetime import datetime, timedelta
 
+urlreverse = {
+    'list' : 'maincalendar/listview.html'
+    ,'day' : 'maincalendar/dayview.html'
+    ,'week' : 'maincalendar/weekview.html'
+    ,'month' : 'maincalendar/monthview.html'
+}
+
 objetos = [
     {
     "id": 1,
@@ -51,12 +58,14 @@ def treatmonth(dayobject, daydata):
             "weeknumber" : int(newday.strftime('%W')),
         })
 
+
  
     monthbigobject = {
+        "today": datetime.today(),
+        "maindate": newdate,
         "monthlist": f"{daydata['months'][months.index(newdate.strftime('%B'))].strip()} {newdate.year}",
-        "objects": monthobject
+        "objects": monthobject,
     }
-    print(monthbigobject)
     return monthbigobject
     
 
@@ -87,6 +96,8 @@ def treatweek(dayobject, daydata):
     weekname = f"{weekname1} - {weekname2}"
 
     weekbigobject = {
+        "today": datetime.today(),
+        "maindate": dayobject,
         "weeklist" : weekname,
         "objects" : weekobject
     }   
@@ -101,8 +112,6 @@ def treatday(dayobject, daydata, texts):
     weekday = daydata['days'][weekdays.index(weekday)].strip()
     monthname = daydata['months'][months.index(month)].strip()
 
-    #treatweek(dayobject, daydata)
-
     treatmonth(dayobject, daydata)
     
     #Build Object
@@ -115,6 +124,7 @@ def treatday(dayobject, daydata, texts):
         "weeknumber" : int(dayobject.strftime('%W')),
         "listview" : f"{weekday}, {dayobject.day} {texts['txtof'].lower()} {monthname} {texts['txtof'].lower()} {dayobject.year}",
         "dayview": f"{monthname} {dayobject.day}, {dayobject.year}",
+        "today": datetime.today(),
     }
 
     return daydict
