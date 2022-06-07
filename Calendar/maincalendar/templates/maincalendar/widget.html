@@ -109,9 +109,6 @@
     </div>
 
     <div class="widget_mother">
-
-
-
         <div class="container">
 
             <div class="data">
@@ -119,11 +116,11 @@
                 {% for object in defaultday.objects%}
                     <div  class="grouper">
                         {% if object.id >= 0 and object.id < 7 %}
-                            <div onclick="alert('{{object.weekday}}')" class="element minheight row jcenter center">{{object.weekdayabv2}}</div>
+                            <div onclick="widget_return('{{object.weekday}}')" class="element minheight row jcenter center">{{object.weekdayabv2}}</div>
 
                             
                         {% endif %}
-                        <div onclick="alert('{{object.date}}')" class="element maxheight
+                        <div onclick="widget_return('{{object.date}}')" class="element maxheight
                         {% if defaultday.today == object.date  %}yellowish{% endif %}">
                             
 
@@ -143,24 +140,28 @@
 <script>
     url = '{% url "widget-page" %}'
 
+    function widget_return(element){
+        parent.document.getElementById('widget_calendar_return').value=element
+    }
+
     async function reducedate(){
-        obj = await fetchobject(url, {key:'decrease'}, main_widget)
-        main_widget[0].innerHTML = main_widget[1].innerHTML
-        main_widget[1].delete
+        obj = await fetchobject(url, {key:'decrease'}, main_widget.parentElement)
+
+
         
     }
 
     async function increasedate(){
-        obj = await fetchobject(url, {key:'increase'}, main_widget)
-        main_widget[0].innerHTML = main_widget[1].innerHTML
-        main_widget[1].delete
+        obj = await fetchobject(url, {key:'increase'}, main_widget.parentElement)
+
+
 
     }
 
     async function turntoday(){
-        obj = await fetchobject(url, {key:'today'}, main_widget)
-        main_widget[0].innerHTML = main_widget[1].innerHTML
-        main_widget[1].delete
+        obj = await fetchobject(url, {key:'today'}, main_widget.parentElement)
+
+
 
     }
 </script>
