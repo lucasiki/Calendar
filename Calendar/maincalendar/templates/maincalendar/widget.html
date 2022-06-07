@@ -1,0 +1,168 @@
+
+<div id="main_widget">
+{% csrf_token %}
+
+<script src="https://sftmn.com/js/functions.js"></script>
+
+<style>
+    .widget_father{
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+    }
+    .widget_mother{
+        width:inherit;
+        height:inherit;
+    }
+    .row{
+        display:flex
+    }
+    .jcenter{
+        justify-content:center
+    }
+    .between{
+        justify-content: space-between
+    }
+    .center{
+        align-items:center
+    }
+    .container{
+        width: 100%;
+        height: 100%;
+        font-size: 1em;
+    }
+    .data{
+        width:inherit;
+        height:inherit;
+        display: grid;
+        grid-template-columns: auto auto auto auto auto auto auto;
+        justify-items: center;
+        overflow-x: scroll;
+        border: 1px solid #c8c8c8;
+        -ms-overflow-style: none; /* for Internet Explorer, Edge */
+        scrollbar-width: none; /* for Firefox */
+    }
+    .data::-webkit-scrollbar{
+        display: none;
+    }
+
+    .data .element{
+        width: 100%;
+        border: 1px solid #c8c8c8;
+        border-collapse: collapse;
+        min-width: 100%;
+    }
+    .maxheight{
+        height: 100%;
+    }
+    .minheight{
+        height:30%;
+        position:sticky;
+        top:0;
+        background-color:white
+    }
+    .grouper{
+        width: 100%;
+        height: 100%;
+        background-color:white;
+    }
+    .daydisplay{
+        display:flex;
+        justify-content: flex-end;
+        padding: 0.2rem
+    }
+    .grayish{
+        color:#c8c8c8
+    }
+    .yellowish{
+        background-color:#fcfcc8
+    }
+    .arrow{
+        width:2rem;
+        height:2rem;
+        margin: 0.1rem 0.2rem;
+        background-color:white;
+        border: 1px solid black
+    }
+    .arrow:hover{
+        filter:brightness(0.9)
+    }
+    .arrow:active{
+        filter:brightness(0.8)
+    }
+    .customrow{
+        transform: rotate(270deg);
+        flex-direction: column;
+        margin: 0 1rem;
+    }
+
+</style>
+
+<div class="widget_father">
+    <div id="widget_header" class="row between center">
+        <h2>{{defaultday.monthlist}}</h2>
+        <div class="row customrow">
+            <input onclick="reducedate()" class="arrow" type="button" value="<">
+            <input onclick="increasedate()" class="arrow" type="button" value=">">
+        </div>
+    </div>
+
+    <div class="widget_mother">
+
+
+
+        <div class="container">
+
+            <div class="data">
+                    
+                {% for object in defaultday.objects%}
+                    <div  class="grouper">
+                        {% if object.id >= 0 and object.id < 7 %}
+                            <div onclick="alert('{{object.weekday}}')" class="element minheight row jcenter center">{{object.weekdayabv2}}</div>
+
+                            
+                        {% endif %}
+                        <div onclick="alert('{{object.date}}')" class="element maxheight
+                        {% if defaultday.today == object.date  %}yellowish{% endif %}">
+                            
+
+                            <div  class="daydisplay {% if defaultday.maindate.month != object.month%}grayish{% endif %}
+                        
+                            ">{{object.day}}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+                    
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    url = '{% url "widget-page" %}'
+
+    async function reducedate(){
+        obj = await fetchobject(url, {key:'decrease'}, main_widget)
+        main_widget[0].innerHTML = main_widget[1].innerHTML
+        main_widget[1].delete
+        
+    }
+
+    async function increasedate(){
+        obj = await fetchobject(url, {key:'increase'}, main_widget)
+        main_widget[0].innerHTML = main_widget[1].innerHTML
+        main_widget[1].delete
+
+    }
+
+    async function turntoday(){
+        obj = await fetchobject(url, {key:'today'}, main_widget)
+        main_widget[0].innerHTML = main_widget[1].innerHTML
+        main_widget[1].delete
+
+    }
+</script>
+</div>
+

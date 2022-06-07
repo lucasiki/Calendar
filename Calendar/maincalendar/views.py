@@ -19,6 +19,54 @@ class testView(View):
     def get(self,request):
         return render(request, 'maincalendar/test.html')
 
+class widgetView(View):
+    def get(self,request):
+        texts = initializeTextDB(df,language,request.session)
+        daydata = processDaydata(texts)
+        defaultday = treatmonth(datetime.today(), daydata) 
+        request.session['DaySession'] = str(datetime.today())
+
+        #print(defaultday)
+        ##Devemos retornar também os dias válidos
+
+        context = {
+            "texts": texts,
+            "daydata": daydata,
+            "defaultday" : defaultday,
+        }
+        resposta = render(request, 'maincalendar/widget.html', context)
+        resposta['Content-Security-Policy'] = "frame-ancestors 'self'"
+        return resposta
+
+    def post(self,request):
+        texts = initializeTextDB(df,language,request.session)
+        daydata = processDaydata(texts)
+        ret = processRequest(request)        
+        daysession = parseDay(request.session['DaySession'])
+
+        ##Devemos retornar também os dias válidos
+
+        mod = 0
+        if ret['key'] == 'decrease':
+            mod = -1
+        elif ret['key'] == 'increase':
+            mod = 1
+        elif ret['key'] == 'today':    
+            daysession = datetime.today()
+
+        increase = mod*30
+        newdate = daysession + timedelta(increase)
+        request.session['DaySession'] = str(newdate)
+        defaultday = treatmonth(newdate, daydata)
+        context = {
+            "daydata": daydata,
+            "defaultday" : defaultday,
+        }
+        #print(defaultday)
+        resposta = render(request, 'maincalendar/widget.html', context)
+        resposta['Content-Security-Policy'] = "frame-ancestors 'self'"
+        return resposta
+
 
 class indexView(View):
     def get(self,request):
@@ -132,8 +180,4 @@ class processView(View):
 
         return render(request, selectedview, context)
 
-        
 
-
-
-        return JsonResponse({})
