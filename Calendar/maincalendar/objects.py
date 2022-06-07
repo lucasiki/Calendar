@@ -55,13 +55,14 @@ def treatmonth(dayobject, daydata):
             "month": newday.month,
             "monthname": daydata['months'][months.index(newday.strftime('%B'))].strip(),
             "year": newday.year,
+            "date": datetime.strftime(datetime(newday.year,newday.month,newday.day), "%Y-%m-%d"),
             "weeknumber" : int(newday.strftime('%W')),
         })
 
 
  
     monthbigobject = {
-        "today": datetime.today(),
+        "today": datetime.strftime(datetime.today(), "%Y-%m-%d"),
         "maindate": newdate,
         "monthlist": f"{daydata['months'][months.index(newdate.strftime('%B'))].strip()} {newdate.year}",
         "objects": monthobject,
@@ -83,6 +84,7 @@ def treatweek(dayobject, daydata):
             "month": newday.month,
             "monthname": daydata['months'][months.index(newday.strftime('%B'))].strip(),
             "year": newday.year,
+            "date": datetime.strftime(datetime(newday.year,newday.month,newday.day), "%Y-%m-%d"),
             "weeknumber" : int(newday.strftime('%W')),
         })
 
@@ -96,7 +98,7 @@ def treatweek(dayobject, daydata):
     weekname = f"{weekname1} - {weekname2}"
 
     weekbigobject = {
-        "today": datetime.today(),
+        "today": datetime.strftime(datetime.today(), "%Y-%m-%d"),
         "maindate": dayobject,
         "weeklist" : weekname,
         "objects" : weekobject
@@ -121,10 +123,11 @@ def treatday(dayobject, daydata, texts):
         "month": dayobject.month,
         "monthname" : monthname,
         "year": dayobject.year,
+        "date": datetime.strftime(datetime(dayobject.year,dayobject.month,dayobject.day), "%Y-%m-%d"),
         "weeknumber" : int(dayobject.strftime('%W')),
         "listview" : f"{weekday}, {dayobject.day} {texts['txtof'].lower()} {monthname} {texts['txtof'].lower()} {dayobject.year}",
         "dayview": f"{monthname} {dayobject.day}, {dayobject.year}",
-        "today": datetime.today(),
+        "today": datetime.strftime(datetime.today(), "%Y-%m-%d"),
     }
 
     return daydict

@@ -15,7 +15,9 @@ df = read_excel('maincalendar/static/maincalendar/textdb.xlsx') ## Initialize wo
 language = 'pt-br'
 paginatorDefault = 10
 
-
+class testView(View):
+    def get(self,request):
+        return render(request, 'maincalendar/test.html')
 
 
 class indexView(View):

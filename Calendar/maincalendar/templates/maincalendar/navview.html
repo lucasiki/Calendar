@@ -47,7 +47,7 @@
     async function reducedate(){
         obj = await fetchobject(url, {key:'decrease'}, root)
         rendername.innerHTML = newrendername.value
-        try{charge('marker 07:00')}
+        try{charge('markerhalf 07:00')}
         catch(err){}
         
     }
@@ -55,14 +55,14 @@
     async function increasedate(){
         obj = await fetchobject(url, {key:'increase'}, root)
         rendername.innerHTML = newrendername.value
-        try{charge('marker 07:00')}
+        try{charge('markerhalf 07:00')}
         catch(err){}
     }
 
     async function turntoday(){
         obj = await fetchobject(url, {key:'today'}, root)
         rendername.innerHTML = newrendername.value
-        try{charge('marker 07:00')}
+        try{charge('markerhalf 07:00')}
         catch(err){}
     }
 
@@ -74,13 +74,13 @@
     async function dayview(){
         obj = await fetchobject(url, {key:'day'}, root)
         rendername.innerHTML = newrendername.value
-        charge('marker 07:00')
+        charge('markerhalf 07:00')
     }
 
     async function weekview(){
         obj = await fetchobject(url, {key:'week'}, root)
         rendername.innerHTML = newrendername.value
-        try{charge('marker 07:00')}
+        try{charge('markerhalf 07:00')}
         catch(err){}
     }
 

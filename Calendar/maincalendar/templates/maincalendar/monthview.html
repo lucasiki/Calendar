@@ -52,8 +52,6 @@
         }
         
         
-        
-        
 
     </style>
 
@@ -67,7 +65,7 @@
                         <div class="element minheight row jcenter center">{{object.weekday}}</div>
                     {% endif %}
                     <div class="element maxheight 
-                    {% if defaultday.today.day == object.day and defaultday.today.month == object.month and defaultday.today.year == object.year  %}yellowish{% endif %}">
+                    {% if defaultday.today == object.date  %}yellowish{% endif %}">
                          
 
                         <div class="daydisplay {% if defaultday.maindate.month != object.month%}grayish{% endif %}
