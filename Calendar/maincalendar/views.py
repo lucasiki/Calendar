@@ -45,7 +45,9 @@ class indexView(View):
             "defaultday" : defaultday,
             "rendername": defaultday['listview']
         }
-        return render(request, 'maincalendar/index.html', context)
+        response = render(request, 'maincalendar/index.html', context)
+        response ['Content-Security-Policy'] = "frame-ancestors 'self' http://127.0.0.1:8000/"
+        return response
 
 
 class processView(View):
