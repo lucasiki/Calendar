@@ -28,15 +28,7 @@ def handle_uploaded_file(f):
 
 class testView(View):
     def get(self,request):
-
-        send_sms(
-    'Here is the message',
-    '+12065550100',
-    ['+5527988291539']
-)
-
-
-
+        
 
         return render(request, 'maincalendar/test.html')
     def post(self,request):

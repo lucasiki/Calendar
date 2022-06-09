@@ -134,14 +134,14 @@ function uncheck(object){
 }    
 
 function createData(key,form){
-FormData = {}
+formdata = {}
 for (let index = 0; index < form.length; index++) {
 	if (form[index].disabled == false)
-  FormData[form[index].id] = form[index].value
+  formdata[form[index].id] = form[index].value
     
 }
-    FormData['key'] = key
-    return(FormData)
+    formdata['key'] = key
+    return(formdata)
 }
 
 const random = (length = 8) => {
