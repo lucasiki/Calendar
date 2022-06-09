@@ -1,5 +1,24 @@
 <input id="widget_calendar_return">
 
-<embed src = "http://127.0.0.1:8000/widget/">
-</embed>
+<script src="https://sftmn.com/js/functions.js"></script>
 
+{% csrf_token %}
+
+<form id="formulario">
+<input type="text" id="test" name="test" value="25">
+<input type="file" id="file" name="file" value="">
+<input type="button" onclick="senddata(formulario)" value="Go">
+</form>
+
+<script>
+async function senddata(form){
+    data = createDataFiles('test', form)
+    url=""
+
+    await fetchpage2(url,data)
+
+    
+
+}
+
+</script>

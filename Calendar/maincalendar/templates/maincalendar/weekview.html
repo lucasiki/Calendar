@@ -83,7 +83,6 @@
                 <div id = "marker{{hora}}" class="hour ">
                     {{hora}}
                 </div>
-                <div id = "markerhalf{{hora}}" class="hour even"></div>
 
             {% endfor %}
         </div>
@@ -95,8 +94,6 @@
 
                     <div class="event {% if defaultday.today == object.date  %}yellowish{% endif %}"></div>
                         
-                    
-                    <div class="event even {% if defaultday.today == object.date  %}yellowish{% endif %}"></div>
 
                 {% endfor %}
             </div>

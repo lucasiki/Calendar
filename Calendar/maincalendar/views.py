@@ -7,6 +7,10 @@ from django.utils.timezone import now
 from django.core.paginator import Paginator
 from .functions import *
 from .objects import *
+from dateutil.relativedelta import relativedelta
+from Calendar import settings
+from django.contrib.contenttypes.models import ContentType
+from sms import send_sms
 
 # Create your views here.
 
@@ -15,9 +19,36 @@ df = read_excel('maincalendar/static/maincalendar/textdb.xlsx') ## Initialize wo
 language = 'pt-br'
 paginatorDefault = 10
 
+
+
+def handle_uploaded_file(f):
+    with open(settings.MEDIA_ROOT / str(f), 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
 class testView(View):
     def get(self,request):
+
+        send_sms(
+    'Here is the message',
+    '+12065550100',
+    ['+5527988291539']
+)
+
+
+
+
         return render(request, 'maincalendar/test.html')
+    def post(self,request):
+        print(request.FILES)
+        print(request.FILES['file'])
+        print(request.POST)
+        handle_uploaded_file(request.FILES['file'])
+
+    
+
+
+        return JsonResponse({})
 
 class widgetView(View):
     def get(self,request):
@@ -54,8 +85,8 @@ class widgetView(View):
         elif ret['key'] == 'today':    
             daysession = datetime.today()
 
-        increase = mod*30
-        newdate = daysession + timedelta(increase)
+        increase = mod*1
+        newdate = daysession + relativedelta(months=increase)
         request.session['DaySession'] = str(newdate)
         defaultday = treatmonth(newdate, daydata)
         context = {
@@ -159,8 +190,8 @@ class processView(View):
             rendername = defaultday['weeklist']
 
         elif selectedview == urlreverse['month']:
-            increase = mod*30
-            newdate = daysession + timedelta(increase)
+            increase = mod*1
+            newdate = daysession + relativedelta(months=increase)
             request.session['DaySession'] = str(newdate)
             defaultday = treatmonth(newdate, daydata)
             rendername = defaultday['monthlist']
