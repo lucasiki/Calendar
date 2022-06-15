@@ -10,7 +10,7 @@ from .objects import *
 from dateutil.relativedelta import relativedelta
 from Calendar import settings
 from django.contrib.contenttypes.models import ContentType
-from sms import send_sms
+
 
 # Create your views here.
 
@@ -42,6 +42,28 @@ class testView(View):
 
         return JsonResponse({})
 
+def convertHour(string):
+    return datetime.strptime(string, "%H:%M")
+
+
+class hourWidgetView(View):
+    def get(self,request):
+
+        hourslist = sorted([
+            '15:00',
+            '16:00',
+            '16:30',
+            '17:00',
+            '13:00',
+        ])
+        print(hourslist)
+
+        context={"hourslist": hourslist}
+
+        resposta = render(request, 'maincalendar/widgets/hourwidget.html', context)
+        resposta['Content-Security-Policy'] = "frame-ancestors 'self' "
+        return resposta
+
 class widgetView(View):
     def get(self,request):
         texts = initializeTextDB(df,language,request.session)
@@ -57,7 +79,7 @@ class widgetView(View):
             "daydata": daydata,
             "defaultday" : defaultday,
         }
-        resposta = render(request, 'maincalendar/widget.html', context)
+        resposta = render(request, 'maincalendar/widgets/calendarwidget.html', context)
         resposta['Content-Security-Policy'] = "frame-ancestors 'self'"
         return resposta
 
@@ -86,8 +108,8 @@ class widgetView(View):
             "defaultday" : defaultday,
         }
         #print(defaultday)
-        resposta = render(request, 'maincalendar/widget.html', context)
-        resposta['Content-Security-Policy'] = "frame-ancestors 'self'"
+        resposta = render(request, 'maincalendar/widgets/calendarwidget.html', context)
+        resposta['Content-Security-Policy'] = "frame-ancestors 'self' "
         return resposta
 
 

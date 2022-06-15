@@ -1,8 +1,21 @@
 <input id="widget_calendar_return">
 
+<input id="widget_calendar_return_hour">
+
 <script src="https://sftmn.com/js/functions.js"></script>
 
 {% csrf_token %}
+
+<style>
+embed::-webkit-scrollbar{
+    display:none
+}
+</style>
+
+
+<embed src="/widget/"></embed>
+
+<embed src="/hour-widget/"></embed>
 
 <form id="formulario">
 <input type="text" id="test" name="test" value="25">

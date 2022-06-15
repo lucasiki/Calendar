@@ -38,7 +38,6 @@
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto;
         justify-items: center;
-        overflow-x: scroll;
         border: 1px solid #c8c8c8;
         -ms-overflow-style: none; /* for Internet Explorer, Edge */
         scrollbar-width: none; /* for Firefox */
@@ -58,8 +57,6 @@
     }
     .minheight{
         height:30%;
-        position:sticky;
-        top:0;
         background-color:white
     }
     .grouper{
@@ -95,6 +92,29 @@
         transform: rotate(270deg);
         flex-direction: column;
         margin: 0 1rem;
+    }
+
+    #main_widget{
+        font-size: 1em;
+        width:100%;
+        height:100%;
+        overflow:visible;
+        -ms-overflow-style: none; /* for Internet Explorer, Edge */
+        scrollbar-width: none; /* for Firefox */
+    }
+    #main_widget::-webkit-scrollbar{
+            display: none;
+    }
+
+    @media screen and (max-width:1000px){
+        #main_widget{
+            font-size: 2em;
+        }
+        .arrow{
+            width: 6rem;
+            height: 4rem;
+            font-size: 1em;
+        }
     }
 
 </style>

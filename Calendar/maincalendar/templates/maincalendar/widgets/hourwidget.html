@@ -1,0 +1,57 @@
+
+<div id="hour_widget">
+    {% csrf_token %}
+    
+    <script src="https://sftmn.com/js/functions.js"></script>
+
+    <style>
+        #hour_widget{
+            display: flex;
+            width:100%;
+            height:100%;
+            justify-content: center
+        }
+
+        .hour_widget_main{
+            display: flex;
+            font-size: 3em;
+            flex-wrap: wrap;
+            overflow-y: scroll;
+            -ms-overflow-style: none; /* for Internet Explorer, Edge */
+            scrollbar-width: none; /* for Firefox */
+        }
+
+        .hour_widget_main::-webkit-scrollbar{
+            display: none;
+        }
+
+        span{
+            width: 100%;
+            display: flex;
+            border: 1px solid black;
+            padding: 1 2rem;
+            box-sizing: border-box;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        
+
+    </style>
+
+    <div class="hour_widget_main">
+        {% for hour in hourslist%}
+            <span onclick="widget_return(this.innerHTML)">{{hour}}</span>
+        {% endfor%}
+    </div>
+
+    <script>
+        url = '{% url "hour-widget-page" %}'
+
+        function widget_return(element){
+            parent.document.getElementById('widget_calendar_return_hour').value=element
+        }
+
+    </script>
+
+</div>
